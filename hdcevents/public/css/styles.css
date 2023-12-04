@@ -200,3 +200,11 @@ footer p{
 #info-container #event-submit{
     margin:20px 0;
 }
+
+#items-list{
+    padding-left: 0;
+    list-style: none;
+}
+#items-list li{
+    display: flex;
+}
