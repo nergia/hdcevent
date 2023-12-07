@@ -61,4 +61,16 @@ class EventController extends Controller
 
         return view('events.show', ['event'=>$event, 'eventOwner'=>$eventOwner]);
     }
+
+    public function dashboard(){
+        $user=auth()->user();
+        $events=$user->events;
+
+        return view('events.dashboard',['events'=>$events]);
+    }
+
+    public function destroy($id){
+        Event::findOrFail($id)->delete();
+        return redirect('/dashboard')->with('msg', 'Evento excluído com sucesso');
+    }
 }
