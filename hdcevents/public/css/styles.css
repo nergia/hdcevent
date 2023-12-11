@@ -163,6 +163,12 @@ footer p{
 }
 
 
+/*Edit Page */
+
+.img-preview{
+    width: 100px;
+    margin-top: 20px;
+}
 
 /*Event Page*/
 #image-container, 
