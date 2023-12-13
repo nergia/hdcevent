@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 
 use App\Models\User;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -70,7 +72,16 @@ class EventController extends Controller
     }
 
     public function destroy($id){
-        Event::findOrFail($id)->delete();
+        $events = Event::findOrFail($id);
+       
+        $image_path = public_path('/img/events/'.$events->image);
+        if(File::exists($image_path)){
+            File::delete($image_path);
+        }
+
+        $events->delete();
+
+        //File::delete(public_path('/img/events'));
         return redirect('/dashboard')->with('msg', 'Evento excluído com sucesso');
     }
 
@@ -80,7 +91,7 @@ class EventController extends Controller
     }
     public function update(Request $request){
         $data = $request->all();
-        if($request->hasFile('image')&& $request->file('image')->isValid()){
+        if($request->hasFile('image') && $request->file('image')->isValid()){
             $requestImage = $request ->image;
             $extension = $requestImage->extension();
             $imageName = md5($requestImage->getClientOriginalName().strtotime("now")).".".$extension;
