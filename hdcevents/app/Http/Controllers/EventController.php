@@ -104,7 +104,7 @@ class EventController extends Controller
         Event::findOrFail($request->id)->update($data);
         return redirect('/dashboard')->with('msg', 'Evento editado com sucesso!');
     }
-
+    /**@var \App\Http\Controllers\EventController $joinEvent */
     public function joinEvent($id){
         $user = auth()->user();
         $user ->eventAsParticipants()->attach($id);
