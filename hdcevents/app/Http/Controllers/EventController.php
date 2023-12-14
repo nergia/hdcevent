@@ -8,7 +8,7 @@ use App\Models\Event;
 
 use App\Models\User;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+
 
 class EventController extends Controller
 {
@@ -68,7 +68,9 @@ class EventController extends Controller
         $user=auth()->user();
         $events=$user->events;
 
-        return view('events.dashboard',['events'=>$events]);
+        $eventAsParticipants = $user->eventAsParticipants;
+        return view('events.dashboard',
+                    ['events'=>$events, 'eventsasparticipant'=>$eventAsParticipants]);
     }
 
     public function destroy($id){
@@ -101,5 +103,14 @@ class EventController extends Controller
 
         Event::findOrFail($request->id)->update($data);
         return redirect('/dashboard')->with('msg', 'Evento editado com sucesso!');
+    }
+
+    public function joinEvent($id){
+        $user = auth()->user();
+        $user ->eventAsParticipants()->attach($id);
+
+        $event=Event::findOrFail($id);
+        
+        return redirect('/dashboard')->with('msg', 'Sua presença está confirmada no evento');
     }
 }
