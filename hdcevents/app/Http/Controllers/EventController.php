@@ -86,14 +86,15 @@ class EventController extends Controller
     }
 
     public function destroy($id){
-        
+       
+
         $events = Event::findOrFail($id);
        
         $image_path = public_path('/img/events/'.$events->image);
         if(File::exists($image_path)){
             File::delete($image_path);
         }
-        $events ->eventAsParticipants()->delete();
+       
         $events->delete();
 
         //File::delete(public_path('/img/events'));
