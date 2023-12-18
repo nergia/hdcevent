@@ -61,7 +61,7 @@
             @foreach($eventsasparticipant as $event)
                 <tr>
                     <td script ="row">{{$loop->index+1}}</td>
-                    <td><a href="/events/leave/{{$event->id}}">{{$event->title}}</a></td>
+                    <td><a href="/events/{{$event->id}}">{{$event->title}}</a></td>
                     <td>{{count($event->users)}}</td>
                     <td>
                         <form action="/events/leave/{{$event->id}}" method="POST">
